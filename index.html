@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Mini Project</title>
+</head>
+<body>
+    <div id="app">
+        <button @click="reverseText">{{ reverseButtonText }}</button>
+
+        <button @click="addListItem">Добавить</button>
+
+        <ul>
+            <li v-for="(item, index) in items" :key="index" @click="removeListItem(index)">
+                {{ item }}
+            </li>
+        </ul>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp, ref } = Vue
+
+        createApp({
+            setup() {
+                const reverseButtonText = ref('Перевернуть')
+                const items = ref([])
+                const index = ref(0)
+
+                const reverseText = () => {
+                    reverseButtonText.value = reverseButtonText.value.split('').reverse().join('')
+                }
+
+                const addListItem = () => {
+                    items.value.push(`Новый элемент списка ${index.value}`)
+                    index.value += 1
+                }
+
+                const removeListItem = (index) => {
+                    items.value.splice(index, 1)
+                }
+
+                return {
+                    reverseButtonText,
+                    reverseText,
+                    index,
+                    items,
+                    addListItem,
+                    removeListItem
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>

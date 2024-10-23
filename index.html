@@ -7,14 +7,11 @@
 </head>
 <body>
     <div id="app">
-        <button @click="reverseText">{{ reverseButtonText }}</button>
-
-        <button @click="addListItem">Добавить</button>
-
+        <button @click="sortProductsLowest">lowest</button>
+        <button @click="sortProductsHighest">highest</button>
+        <button @click="sortProductsNone">none</button>
         <ul>
-            <li v-for="(item, index) in items" :key="index" @click="removeListItem(index)">
-                {{ item }}
-            </li>
+            <li v-for="(product, index) in productsToDisplay" :key="index">{{ product.name }}, {{ product.price }} $</li>
         </ul>
     </div>
 
@@ -24,30 +21,34 @@
 
         createApp({
             setup() {
-                const reverseButtonText = ref('Перевернуть')
-                const items = ref([])
-                const index = ref(0)
+                const products = ref([
+                    {name: 'Tovar 1', price: 10},
+                    {name: 'Tovar 2', price: 7},
+                    {name: 'Tovar 3', price: 1},
+                    {name: 'Tovar 4', price: 87},
+                    {name: 'Tovar 5', price: 5},
+                    {name: 'Tovar 6', price: 6},
+                ])
 
-                const reverseText = () => {
-                    reverseButtonText.value = reverseButtonText.value.split('').reverse().join('')
+                const productsToDisplay = ref([...products.value])
+
+                const sortProductsLowest = () => {
+                    productsToDisplay.value.sort((a, b) => a.price - b.price)
                 }
 
-                const addListItem = () => {
-                    items.value.push(`Новый элемент списка ${index.value}`)
-                    index.value += 1
+                const sortProductsHighest = () => {
+                    productsToDisplay.value.sort((a, b) => b.price - a.price)
                 }
 
-                const removeListItem = (index) => {
-                    items.value.splice(index, 1)
+                const sortProductsNone = () => {
+                    productsToDisplay.value = [...products.value]
                 }
 
                 return {
-                    reverseButtonText,
-                    reverseText,
-                    index,
-                    items,
-                    addListItem,
-                    removeListItem
+                    productsToDisplay,
+                    sortProductsLowest,
+                    sortProductsHighest,
+                    sortProductsNone
                 }
             }
         }).mount('#app')

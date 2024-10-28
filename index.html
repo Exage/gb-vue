@@ -1,57 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue Mini Project</title>
-</head>
-<body>
-    <div id="app">
-        <button @click="sortProductsLowest">lowest</button>
-        <button @click="sortProductsHighest">highest</button>
-        <button @click="sortProductsNone">none</button>
-        <ul>
-            <li v-for="(product, index) in productsToDisplay" :key="index">{{ product.name }}, {{ product.price }} $</li>
-        </ul>
-    </div>
-
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script>
-        const { createApp, ref } = Vue
-
-        createApp({
-            setup() {
-                const products = ref([
-                    {name: 'Tovar 1', price: 10},
-                    {name: 'Tovar 2', price: 7},
-                    {name: 'Tovar 3', price: 1},
-                    {name: 'Tovar 4', price: 87},
-                    {name: 'Tovar 5', price: 5},
-                    {name: 'Tovar 6', price: 6},
-                ])
-
-                const productsToDisplay = ref([...products.value])
-
-                const sortProductsLowest = () => {
-                    productsToDisplay.value.sort((a, b) => a.price - b.price)
-                }
-
-                const sortProductsHighest = () => {
-                    productsToDisplay.value.sort((a, b) => b.price - a.price)
-                }
-
-                const sortProductsNone = () => {
-                    productsToDisplay.value = [...products.value]
-                }
-
-                return {
-                    productsToDisplay,
-                    sortProductsLowest,
-                    sortProductsHighest,
-                    sortProductsNone
-                }
-            }
-        }).mount('#app')
-    </script>
-</body>
+    <title>Vite App</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>
